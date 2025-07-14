@@ -5,6 +5,7 @@ import { Eye, EyeOff, X } from "lucide-react";
 
 import { authenticateUser, isAuthenticated, login } from "@/lib/auth";
 import { Input, SubmitButton, Loader } from "@/components";
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const Login = () => {
   const { push } = useRouter();
@@ -98,6 +99,7 @@ const Login = () => {
             </label>
             <Input
               id="username-input"
+              name="username"
               type="text"
               placeholder="Digite seu usuário"
               value={loginData.username}
@@ -118,6 +120,7 @@ const Login = () => {
             </label>
             <Input
               id="password-input"
+              name="password"
               type={showPassword ? "text" : "password"}
               placeholder="Digite sua senha"
               value={loginData.password}

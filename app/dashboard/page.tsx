@@ -1,16 +1,20 @@
-"use client";
-import { useEffect } from "react";
+'use client';
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LogOut, User } from "lucide-react";
-
 import { isAuthenticated, logout } from "@/lib/auth";
+import { DashboardSkeleton } from '@/components/skeleton';
 
 const Dashboard = () => {
   const { push } = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!isAuthenticated()) {
       push("/");
+    } else {
+      // Simula carregamento de dados
+      setTimeout(() => setIsLoading(false), 1500);
     }
   }, [push]);
 
@@ -18,6 +22,24 @@ const Dashboard = () => {
     logout();
     push("/");
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <nav className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="h-8 bg-gray-200 rounded w-32 animate-pulse"></div>
+          </div>
+        </nav>
+
+        <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <div className="px-4 py-6 sm:px-0">
+            <DashboardSkeleton />
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
